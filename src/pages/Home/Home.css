@@ -1,0 +1,21 @@
+.home-container{
+position: relative;
+}
+
+.user{
+    margin-top: 2rem;
+}
+
+.user h4:hover{
+    color:var(--primary-color)
+}
+
+a:visited{
+    color :gray
+}
+
+
+main{
+    margin-top: 1rem;
+    grid-column-start: 2 ;
+}

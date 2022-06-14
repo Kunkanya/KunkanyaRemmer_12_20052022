@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/Dashboard/Dashboard.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/Dashboard/Dashboard.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>//import { GetAverageSessionDataById } from '../service/Api/Api'
+import { FetchData } from '../../service/Api/Axios'
+import { useParams } from 'react-router-dom'
+import Header from '../../components/Header/Header'
+import Error404 from '../Error404/Error404'
+import NavbarVertical from '../../components/NavbarVertical/NavbarVertical'
+import ActivityBarChart from '../../components/charts/ActivityBarChart/ActivityBarChart'
+import AverageSessionLineChart from '../../components/charts/AverageSessionLineChart/AverageSessionLineChart'
+import PerformanceChart from '../../components/charts/PerformanceChart/PerformanceChart'
+import ScoreChart from '../../components/charts/ScoreChart/ScoreChart'
+import KeyInfo from '../../components/KeyInfo/KeyInfo'
+import CaloriesIcon from '../../asset/calories-icon.png'
+import ProteinesIcon from '../../asset/protein-icon.png'
+import CarbsIcon from '../../asset/carbs-icon.png'
+import FatIcon from '../../asset/fat-icon.png'
+import './Dashboard.css'
+
+
+/**
+ * @description Dashboard component shows all the graphics according to each user.
+ * @returns {HTMLElement} Return Dashboard page for user´s sport activities with different types of chart.
+ */
+const Dashboard = () => {
+
+  const userId = useParams().id
+  console.log(userId)
+
+  //Get user id from the url
+  const locationId = window.location.href.split('/')[4]
+  //Call function Fetchdata() and restore to variable data
+  const data = FetchData(locationId)
+  //Get the information
+  const isLoading = data.isLoading
+  const userData = data.userProfileData
+  
+  //check if data in json contain "userData.todayScore" or "userData.score" 
+  const score = () => {
+    return userData.score ? userData.score : userData.todayScore 
+  }
+
+  return (
+    &lt;>
+      {data.error || userData === undefined ? &lt;Error404 message={data.error}/> :
+        (
+          &lt;>
+            {isLoading ? &lt;div>Loading....&lt;/div> :
+              &lt;>
+                &lt;div className='home-container'>
+                  &lt;Header />
+                  &lt;div className="content-wrapper">
+                    &lt;NavbarVertical />
+                    &lt;main className="contents-container" >
+                      &lt;div className="content-header" key="1">
+                        &lt;h1>Bonjour &lt;span style={{ color: "red" }} key="1">{userData.userInfos.firstName}&lt;/span>&lt;/h1>
+                        &lt;p>Félicitation ! Vous avez explosé vos objectifs hier 👏 &lt;/p>
+                      &lt;/div>
+                      &lt;div className="grid-container">
+                        &lt;section className="left">
+                          &lt;div className="activity">
+                            &lt;ActivityBarChart data={data.userActivityData} />
+                          &lt;/div>
+                          &lt;div className="gridBelow-container">
+                            &lt;AverageSessionLineChart data={data.userAverageSessionData} />
+                            &lt;PerformanceChart data={data.userPerformanceData} />
+                            &lt;ScoreChart score={score()} />
+                          &lt;/div>
+                        &lt;/section>
+                        &lt;aside className="right">
+                          &lt;KeyInfo icon={CaloriesIcon} value={userData.keyData.calorieCount} type={"Calories"} />
+                          &lt;KeyInfo icon={ProteinesIcon} value={userData.keyData.proteinCount} type={"Proteines"} />
+                          &lt;KeyInfo icon={CarbsIcon} value={userData.keyData.carbohydrateCount} type={"Glucides"} />
+                          &lt;KeyInfo icon={FatIcon} value={userData.keyData.lipidCount} type={"Lipides"} />
+                        &lt;/aside>
+                      &lt;/div>
+                    &lt;/main>
+
+                  &lt;/div>
+
+                &lt;/div>
+              &lt;/>
+            }
+          &lt;/>
+        )
+        }
+    &lt;/>
+
+
+
+  )
+
+}
+
+export default Dashboard
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#ActivityBarChart">ActivityBarChart</a></li><li><a href="global.html#AverageSessionLineChart">AverageSessionLineChart</a></li><li><a href="global.html#CustomTooltip">CustomTooltip</a></li><li><a href="global.html#CustomTooltipContent">CustomTooltipContent</a></li><li><a href="global.html#CustomTooltipCursor">CustomTooltipCursor</a></li><li><a href="global.html#Dashboard">Dashboard</a></li><li><a href="global.html#endpoints_production">endpoints_production</a></li><li><a href="global.html#Error404">Error404</a></li><li><a href="global.html#FetchData">FetchData</a></li><li><a href="global.html#FormatXAxis">FormatXAxis</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#InfoKey">InfoKey</a></li><li><a href="global.html#mock_env">mock_env</a></li><li><a href="global.html#NavbarVertical">NavbarVertical</a></li><li><a href="global.html#PerformanceChart">PerformanceChart</a></li><li><a href="global.html#productionUrl">productionUrl</a></li><li><a href="global.html#ScoreChart">ScoreChart</a></li><li><a href="global.html#tickFormatter">tickFormatter</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Thu Jun 09 2022 15:19:52 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: service/Api/Axios.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: service/Api/Axios.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useEffect, useState } from 'react'
+import axios from 'axios'
+import PropTypes from 'prop-types'
+import data from '../../asset/data.json'
+
+/** 
+* @description Variable to choose the environment to access the database. 
+* In order use mock environement please set "mock_env" to "true". 
+* If "true" It will get data drom asset/data.json
+* If "false". Api will be called by using axios in function FetchData().
+* @type {boolean}
+ */
+const mock_env = false
+
+/**
+ * @description Base Url for production.
+ * @type {string}
+ */
+const productionUrl = 'http://localhost:3000/user/'
+
+/**
+ * @description Endpoint for production API.
+ * 
+ * @param {string} baseUrl 
+ * @example http://localhost:3000/user
+ * @param {string} id User id.
+ * @returns { String[] } Return array of texts of url endpoints.
+ */
+const endpoints_production = (baseUrl, id) => {
+    const urlProfile = baseUrl + id
+    const urlActivity = baseUrl + id + "/activity"
+    const urlAverageSession = baseUrl + id + "/average-sessions"
+    const urlPerformance = baseUrl + id + "/performance"
+    return ([urlProfile, urlActivity, urlAverageSession, urlPerformance])
+}
+
+/**
+ * @description Function FetchData() using asiox with async/await method if "mock_env = false"
+ * If "mock_env = true", data will be imported from  '../../asset/data.json'.
+ * @methods
+ * @param {string} id User id which passed from Dashboard.jsx when the function is called.
+ * @returns { Object[]} Return array of Objects of user data.
+ */
+export const FetchData = (id) => {
+    const [userProfileData, setUserProfileData] = useState([])
+    const [userActivityData, setUserActivityData] = useState([])
+    const [userAverageSessionData, setUserAverageSessionData] = useState([])
+    const [userPerformanceData, setUserPerformanceData] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
+    const [error, setError] = useState("")
+
+    const userId = parseInt(id)
+
+    useEffect(() => {
+        let endpoints = []
+        let baseUrl = ""
+
+        const getData = async () => {
+            if (mock_env) {
+                console.log("!!Use Mock Database!!")
+                setIsLoading(false)
+                setError(false)
+                setUserProfileData(data.user.find((user) => user.id === userId))
+                setUserAverageSessionData(data.averageSessions.find((user) => user.userId === userId))
+                setUserActivityData(data.activity.find((user) => user.userId === userId))
+                setUserPerformanceData(data.performance.find((user) => user.userId === userId))
+            } else {
+                baseUrl = productionUrl
+                endpoints = endpoints_production(baseUrl, userId)
+                console.log(endpoints)
+                console.log("!!Use API port 3000 from Backend!!")
+                try {
+                    await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
+                        .then(axios.spread((...allData) => {
+                            console.log(allData)
+                            setIsLoading(false)
+                            setUserProfileData(allData[0].data.data)
+                            setUserActivityData(allData[1].data.data)
+                            setUserAverageSessionData(allData[2].data.data)
+                            setUserPerformanceData(allData[3].data.data)
+                        })
+                        )
+                }
+                catch (errors) {
+                    setError(errors.message)
+                }
+            }
+        }
+        //Call function getData()
+        getData()
+
+    }, [id, userId])
+    return { userActivityData, userAverageSessionData, userPerformanceData, userProfileData, isLoading, error }
+}
+
+FetchData.propTypes = {
+    id: PropTypes.string.isRequired
+}
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#ActivityBarChart">ActivityBarChart</a></li><li><a href="global.html#AverageSessionLineChart">AverageSessionLineChart</a></li><li><a href="global.html#CustomTooltip">CustomTooltip</a></li><li><a href="global.html#CustomTooltipContent">CustomTooltipContent</a></li><li><a href="global.html#CustomTooltipCursor">CustomTooltipCursor</a></li><li><a href="global.html#Dashboard">Dashboard</a></li><li><a href="global.html#endpoints_production">endpoints_production</a></li><li><a href="global.html#Error404">Error404</a></li><li><a href="global.html#FetchData">FetchData</a></li><li><a href="global.html#FormatXAxis">FormatXAxis</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#InfoKey">InfoKey</a></li><li><a href="global.html#mock_env">mock_env</a></li><li><a href="global.html#NavbarVertical">NavbarVertical</a></li><li><a href="global.html#PerformanceChart">PerformanceChart</a></li><li><a href="global.html#productionUrl">productionUrl</a></li><li><a href="global.html#ScoreChart">ScoreChart</a></li><li><a href="global.html#tickFormatter">tickFormatter</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Thu Jun 09 2022 15:19:52 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

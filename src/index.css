@@ -1,0 +1,37 @@
+:root {
+  --primary-color: #E60000;
+  --secondary-color: #282D30;
+  --tertiary-color: #FBFBFB;
+  --tooltipBG-color: #C4C4C4;
+  --dashboard-font-color:#74798C;
+  /*breakpoint screen*/
+  --nav-color :white;
+  --background-color : black;
+  
+}
+*, 
+*::before, 
+*::after, 
+body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+h1{
+  font-size: 48px;
+}
+ul {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}

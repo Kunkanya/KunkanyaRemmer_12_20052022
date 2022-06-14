@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/charts/AverageSessionLineChart/AverageSessionLineChart.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/charts/AverageSessionLineChart/AverageSessionLineChart.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import PropTypes from 'prop-types'
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import './AverageSessionLineChart.css'
+
+
+/**
+ * @description Function to get value for XAxis.  
+ * @param {Number} day  
+ * @returns {String} Return string of weekday with format "D". 
+ * @example return "L" , "M.
+ */
+const FormatXAxis = (day) => {
+  const weekday = new Array(7)
+  weekday[1] = 'L'
+  weekday[2] = 'M'
+  weekday[3] = 'M'
+  weekday[4] = 'J'
+  weekday[5] = 'V'
+  weekday[6] = 'S'
+  weekday[7] = 'D'
+  return weekday[day]
+}
+
+/**
+ * 
+ * @param {Boolean} active Status of the tooltip.
+ * @param {Array} payload Text value of the tooltip. 
+ * @returns {HTMLElement} Return custom text for tooltip.
+ */
+const CustomTooltipContent = ({ active, payload }) => {
+  if (active &amp;&amp; payload &amp;&amp; payload.length) {
+    return (
+      &lt;div className="average-tooltip-wrapper">
+        &lt;p className="label">{`${payload[0].value} mins`}&lt;/p>
+      &lt;/div>
+    )
+  }
+}
+
+/**
+ * @description Get position of the props and add sgv rectangle for the background after active dot.
+ * @param {Number} props Get the position from property of cursor.
+ * @returns {HTMLElement} Return sgv rectangle.
+ */
+const CustomTooltipCursor = (props) => {
+  const cx = props.points[1].x
+  const cy = props.points[1].y + 180
+
+  return (
+    &lt;svg x={cx} width={cy + cx} height={264}>
+      &lt;rect width={cy} height={264} fill="rgba(0,0,0,0.15)" />
+    &lt;/svg>
+  )
+}
+
+/**
+ * @description Component user´s average session line bar using Recharts.
+ * 
+ * @component
+ * @param {Object} data Data passing from Dashboard page.
+ * @returns {HTMLElement} Return user´s average session linechart.
+ */
+const AverageSessionLineChart = ({ data }) => {
+  return (
+    &lt;div className="box-container">
+      &lt;h4>Durée moyenne des sessions&lt;/h4>
+      &lt;ResponsiveContainer width="100%" height="100%"
+      >
+        &lt;LineChart
+          data={data.sessions}
+          margin={{
+            top: 5,
+            right: 10,
+            left: 10,
+            bottom: 5,
+          }}
+        >
+          &lt;XAxis dataKey="day"
+            fontSize={12}
+            tickMargin={0}
+            tickSize={0}
+            tick={{
+              fill: '#FFF',
+              fontSize: '12px',
+              opacity: 0.5,
+            }}
+            axisLine={false}
+            allowDataOverflow={true}
+            stroke="white"
+            tickFormatter={FormatXAxis}
+          />
+
+          &lt;YAxis dataKey="sessionLength"
+            type='number'
+            domain={["dataMin-5", "dataMax +20"]}
+            axisLine={false}
+            hide={true}
+          />
+          &lt;Tooltip
+            content={&lt;CustomTooltipContent />}
+            cursor={&lt;CustomTooltipCursor />}
+          />
+
+          &lt;Line type="monotoneX"
+            dataKey="sessionLength"
+            stroke="white"
+            strokeWidth={2}
+            activeDot={{
+              stroke: 'rgba(255, 255, 255, 0.3)',
+              strokeWidth: 10,
+              r: 4,
+            }}
+            dot={false}
+            strokeDashArray="4 4" />
+
+        &lt;/LineChart>
+      &lt;/ResponsiveContainer>
+
+    &lt;/div>
+  )
+}
+
+AverageSessionLineChart.propTypes = {
+  data: PropTypes.object.isRequired
+}
+
+FormatXAxis.propTypes = {
+  day: PropTypes.number.isRequired
+}
+
+CustomTooltipContent.propTypes = {
+  active: PropTypes.bool,
+  payload: PropTypes.array
+}
+
+CustomTooltipCursor.propTypes ={
+  props : PropTypes.number
+}
+
+export default AverageSessionLineChart
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#ActivityBarChart">ActivityBarChart</a></li><li><a href="global.html#AverageSessionLineChart">AverageSessionLineChart</a></li><li><a href="global.html#CustomTooltip">CustomTooltip</a></li><li><a href="global.html#CustomTooltipContent">CustomTooltipContent</a></li><li><a href="global.html#CustomTooltipCursor">CustomTooltipCursor</a></li><li><a href="global.html#Dashboard">Dashboard</a></li><li><a href="global.html#endpoints_production">endpoints_production</a></li><li><a href="global.html#Error404">Error404</a></li><li><a href="global.html#FetchData">FetchData</a></li><li><a href="global.html#FormatXAxis">FormatXAxis</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#InfoKey">InfoKey</a></li><li><a href="global.html#mock_env">mock_env</a></li><li><a href="global.html#NavbarVertical">NavbarVertical</a></li><li><a href="global.html#PerformanceChart">PerformanceChart</a></li><li><a href="global.html#productionUrl">productionUrl</a></li><li><a href="global.html#ScoreChart">ScoreChart</a></li><li><a href="global.html#tickFormatter">tickFormatter</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Thu Jun 09 2022 15:19:52 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+.nav-vertical{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 120px; 
+    background-color: var(--background-color);
+    height: 100%;
+    position: fixed;
+    overflow: auto;
+
+}
+
+.nav-vertical img{
+    height: 55px ;
+    width: 55px;
+    margin : 1rem auto;
+}
+
+.copyright{
+    font-size:12px;
+    color:white;
+    display: flex;
+    align-items: center;
+    direction: rtl;
+    writing-mode: vertical-lr;
+    margin-top: 3rem;
+    transform: rotate(180deg);
+}
+
+@media only screen and (max-width:781px)  {
+.nav-vertical{
+    width: 70px;
+}
+
+.nav-vertical img{
+    width:40px;
+    height: 40px;
+}
+}
