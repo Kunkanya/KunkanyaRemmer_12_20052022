@@ -10,7 +10,7 @@ import data from '../../asset/data.json'
 * If "false". Api will be called by using axios in function FetchData().
 * @type {boolean}
  */
-const mock_env = false
+const mock_env = true
 
 /**
  * @description Base Url for production.
@@ -51,6 +51,8 @@ export const FetchData = (id) => {
 
     const userId = parseInt(id)
 
+
+    console.log("mock_env", mock_env)
     useEffect(() => {
         let endpoints = []
         let baseUrl = ""
