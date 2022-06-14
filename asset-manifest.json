@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/KunkanyaRemmer_12_20052022/static/css/main.ac8fa16f.css",
+    "main.js": "/KunkanyaRemmer_12_20052022/static/js/main.56ccbc20.js",
+    "static/media/logo.png": "/KunkanyaRemmer_12_20052022/static/media/logo.e950560f9b83b1780687.png",
+    "index.html": "/KunkanyaRemmer_12_20052022/index.html",
+    "static/media/yoga-icon.svg": "/KunkanyaRemmer_12_20052022/static/media/yoga-icon.e6da2f731117475422a8c38c6684702f.svg",
+    "main.ac8fa16f.css.map": "/KunkanyaRemmer_12_20052022/static/css/main.ac8fa16f.css.map",
+    "main.56ccbc20.js.map": "/KunkanyaRemmer_12_20052022/static/js/main.56ccbc20.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ac8fa16f.css",
+    "static/js/main.56ccbc20.js"
+  ]
+}
